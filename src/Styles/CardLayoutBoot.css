@@ -1,0 +1,32 @@
+
+
+.card {
+  width: 18rem;
+
+}
+
+
+@media (max-width: 768px) {
+  .maincontent {
+    display: block; 
+  }
+  .card {
+    width: 100%; 
+    margin-bottom: 20px; 
+ 
+  }
+}
+
+/* Desktop layout */
+@media (min-width: 769px) {
+  .maincontent {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; 
+    gap: 20px;
+  }
+  .card {
+
+    margin-bottom: 0; 
+  }
+}
