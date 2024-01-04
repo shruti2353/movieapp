@@ -68,7 +68,7 @@ function EditMovie() {
     <div className="maincontainer">
       <div className="wrapper">
         <div className="headcontainer">
-          <h1>Create a New Movie</h1>
+          <h1>Edit Movie</h1>
         </div>
         <div className="inputbox">
           <div className="imagebox">
