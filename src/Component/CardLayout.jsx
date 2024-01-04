@@ -1,6 +1,7 @@
+// CardLayout.jsx
+
 import React from "react";
 import { Link } from "react-router-dom";
-import defaultImage from "../assets/banner4.png";
 import "../Styles/CardLayoutBoot.css";
 
 function CardLayout({ movie }) {
@@ -9,13 +10,15 @@ function CardLayout({ movie }) {
     margin: "2rem",
   };
 
-  const imageSource = defaultImage; // Use movie image if available, otherwise use defaultImage
+  const imageSource = movie.image; // Use movie image directly
 
   return (
     <div className="card" style={cardStyle}>
-      <img src={imageSource} className="card-img-top" alt="Movie poster" />
+      {imageSource && (
+        <img src={imageSource} className="card-img-top" alt="Movie poster" />
+      )}
       <div className="card-body">
-        <h5 className="card-title">{movie.name || "Movie Title"}</h5>
+        <h5 className="card-title">{movie.title || "Movie Title"}</h5>
         <p className="card-text">
           {movie.description || "Movie description goes here..."}
         </p>

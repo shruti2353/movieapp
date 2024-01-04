@@ -6,6 +6,12 @@ function Empty() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const isLoggedIn = localStorage.getItem("loggedIn");
+    if (!isLoggedIn) {
+      navigate("/");
+    }
+  }, [navigate]);
+  useEffect(() => {
     const existingMovies = JSON.parse(localStorage.getItem("movies")) || [];
     if (existingMovies.length > 0) {
       navigate("/mymovie");

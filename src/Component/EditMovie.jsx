@@ -1,27 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import "../Styles/CreateMovie.css";
-import { useNavigate } from "react-router-dom";
-
 
 function EditMovie() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const [movieName, setMovieName] = useState("");
   const [movieYear, setMovieYear] = useState("");
   const [movieImage, setMovieImage] = useState(null);
-  const [imageData, setImageData] = useState(""); // To store image data URL
- 
-  const navigate = useNavigate();
-  const handleCancel = () => {
-    navigate("/mymovie"); // Navigate to "/mymovie" on cancel button click
-  };
-  const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
-    setMovieImage(selectedFile);
 
-    const reader = new FileReader();
-    reader.onload = () => {
-      setImageData(reader.result);
-    };
-    reader.readAsDataURL(selectedFile);
+  useEffect(() => {
+    if (location.state && location.state.movie) {
+      const { title, year, image } = location.state.movie;
+      setMovieName(title || "");
+      setMovieYear(year || "");
+      // Set the movie image path or data to display
+      setMovieImage(image || null);
+    }
+  }, [location.state]);
+
+  const handleFileChange = (e) => {
+    // Handle file change logic here...
   };
 
   const handleTitleChange = (e) => {
@@ -35,20 +35,32 @@ function EditMovie() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (movieImage) {
-      const imagePath = `../images/${movieImage.name}`;
-      const newMovie = {
-        name: movieName,
-        year: movieYear,
-        image: imagePath,
-      };
-      const storedMovies = JSON.parse(localStorage.getItem("movies")) || [];
-      const updatedMovies = [...storedMovies, newMovie];
-      localStorage.setItem("movies", JSON.stringify(updatedMovies));
-      setImageData(imagePath);
+    // Get the edited movie details
+    const editedMovie = {
+      title: movieName,
+      year: movieYear,
+      image: movieImage,
+    };
+
+    // Get all movies from local storage
+    let storedMovies = JSON.parse(localStorage.getItem("movies")) || [];
+
+    // Find the index of the movie to be updated in the stored movies
+    const movieIndex = storedMovies.findIndex(
+      (movie) => movie.image === editedMovie.image
+    );
+
+    if (movieIndex !== -1) {
+      // Replace the movie details at the found index with the edited movie
+      storedMovies[movieIndex] = editedMovie;
+
+      // Update local storage with the updated movies list
+      localStorage.setItem("movies", JSON.stringify(storedMovies));
+
+      // Navigate back to the movie list
       navigate("/mymovie");
     } else {
-      console.log("Please select an image.");
+      console.log("Movie not found in the list.");
     }
   };
 
@@ -83,7 +95,7 @@ function EditMovie() {
               onChange={handleYearChange}
             />
             <div className="buttonwrapper">
-            <button className="buttonscancel" onClick={handleCancel}>Cancel</button>
+              <button className="buttonscancel">Cancel</button>
               <button className="buttonssubmit" onClick={handleSubmit}>
                 Submit
               </button>

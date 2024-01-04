@@ -19,7 +19,7 @@ function MyMovie() {
     setMovies(storedMovies);
   }, [navigate]);
 
-  const cardsPerPage = 3;
+  const cardsPerPage = 4;
   const [currentPage, setCurrentPage] = useState(1);
 
   const totalPages = Math.ceil(movies.length / cardsPerPage);
