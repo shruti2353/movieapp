@@ -19,7 +19,7 @@ function MyMovie() {
     setMovies(storedMovies);
   }, [navigate]);
 
-  const cardsPerPage = 4;
+  const cardsPerPage = 8;
   const [currentPage, setCurrentPage] = useState(1);
 
   const totalPages = Math.ceil(movies.length / cardsPerPage);
@@ -65,7 +65,7 @@ function MyMovie() {
         <button
           key={i}
           onClick={() => changePage(i)}
-          className={currentPage === i ? "active" : ""}
+          id={currentPage === i ? "active" : ""}
         >
           {i}
         </button>
@@ -80,23 +80,23 @@ function MyMovie() {
   }
 
   return (
-    <div className="maincontainer">
-      <div className="headerdiv">
-        <div className="hc">
-          <h1 className="h1mymovie">My Movies</h1>
-          <button onClick={handleAddMovie} className="button-icon">
+    <div id="maincontainer">
+      <div id="headerdiv">
+        <div id="hc">
+          <h1 id="h1mymovie">My Movies</h1>
+          <button onClick={handleAddMovie} id="button-icon">
             <FaPlus />
           </button>
         </div>
-        <div className="logout">
-          <button onClick={handleLogout} className="button-icon">
+        <div id="logout">
+          <button onClick={handleLogout} id="button-icon">
             <FaSignOutAlt />
           </button>
         </div>
       </div>
       <div id="maincontent">{renderCardsForPage()}</div>
-      <div className="footer">
-        <div className="pagenumber">
+      <div id="footer">
+        <div id="pagenumber">
           <button onClick={handlePrevPage}>PREV</button>
           {renderPageNumbers()}
           <button onClick={handleNextPage}>NEXT</button>

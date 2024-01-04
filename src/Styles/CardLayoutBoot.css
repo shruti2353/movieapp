@@ -1,11 +1,15 @@
-
-
 .card {
   width: 18rem;
-
+  margin: 2rem;
 }
 
-
+.card .card-img-top {
+  max-width: 100%; 
+  max-height: 200px; 
+  width: auto; 
+  height: auto; 
+  object-fit: cover; 
+}
 @media (max-width: 768px) {
   .maincontent {
     display: block; 
